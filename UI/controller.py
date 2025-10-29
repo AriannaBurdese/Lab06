@@ -27,5 +27,12 @@ class Controller:
         self._view.txt_responsabile.value = f"Responsabile: {self._model.responsabile}"
         self._view.update()
 
+    def mostra_automobili(self,automobile ):
+        self._model.automobile = automobile
+        self._view.txt_automobile.value = f"Automobile: {self._model.automobile}"
+        self._view.update()
+
+
+
     # Altre Funzioni Event Handler
     # TODO

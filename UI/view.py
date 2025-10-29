@@ -52,6 +52,7 @@ class View:
         # ListView per mostrare la lista di auto aggiornata
         self.lista_auto = ft.ListView(expand=True, spacing=5, padding=10, auto_scroll=True)
 
+
         # TextField per ricerca auto per modello
         self.input_modello_auto = ft.TextField(label="Modello")
 
@@ -61,6 +62,7 @@ class View:
         # --- PULSANTI e TOGGLE associati a EVENTI ---
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
         pulsante_conferma_responsabile = ft.ElevatedButton("Conferma", on_click=self.controller.conferma_responsabile)
+        pulsante_mostra_automobili = ft.ElevatedButton("Mostra", on_click=self.controller.mostra_automobili)
 
         # Altri Pulsanti da implementare (es. "Mostra" e "Cerca")
         # TODO
@@ -82,7 +84,10 @@ class View:
             ft.Divider(),
 
             # Sezione 3
-            # TODO
+
+            ft.Row(spacing=200,
+                   controls = [ft.Text("Automobili", size = 20), pulsante_mostra_automobili]),
+            ft.Divider(),
 
             # Sezione 4
             # TODO
