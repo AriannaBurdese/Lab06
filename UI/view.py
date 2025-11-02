@@ -62,10 +62,11 @@ class View:
         # --- PULSANTI e TOGGLE associati a EVENTI ---
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
         pulsante_conferma_responsabile = ft.ElevatedButton("Conferma", on_click=self.controller.conferma_responsabile)
-        pulsante_mostra_automobili = ft.ElevatedButton("Mostra", on_click=self.controller.mostra_automobili)
+
 
         # Altri Pulsanti da implementare (es. "Mostra" e "Cerca")
-        # TODO
+        pulsante_mostra_automobili = ft.ElevatedButton("Mostra", on_click=self.controller.mostra_automobili)
+        pulsante_cerca_automobili = ft.ElevatedButton("Cerca", on_click=self.controller.cerca_automobili)
 
         # --- LAYOUT ---
         self.page.add(
@@ -85,12 +86,17 @@ class View:
 
             # Sezione 3
 
-            ft.Row(spacing=200,
+            ft.Row(spacing=20,
                    controls = [ft.Text("Automobili", size = 20), pulsante_mostra_automobili]),
+            self.lista_auto,
             ft.Divider(),
 
             # Sezione 4
-            # TODO
+            ft.Text("Cerca automobile", size=20),
+            ft.Row(spacing=20,
+                   controls = [self.input_modello_auto,pulsante_cerca_automobili]),
+            self.lista_auto_ricerca,
+            ft.Divider(),
         )
 
     def cambia_tema(self, e):

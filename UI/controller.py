@@ -27,10 +27,22 @@ class Controller:
         self._view.txt_responsabile.value = f"Responsabile: {self._model.responsabile}"
         self._view.update()
 
-    def mostra_automobili(self,automobile ):
-        self._model.automobile = automobile
-        self._view.txt_automobile.value = f"Automobile: {self._model.automobile}"
+    def mostra_automobili(self, e):
+        automobili = self._model.get_automobili()
+        self._view.lista_auto.controls.clear()
+        for auto in automobili:
+            self._view.lista_auto.controls.append(ft.Text(auto))
         self._view.update()
+
+    def cerca_automobili(self, e):
+        modello = self._view.input_modello_auto.value
+        self._view.lista_auto_ricerca.controls.clear()
+        auto_cercate = self._model.cerca_automobili_per_modello(modello)
+        for auto in auto_cercate:
+            self._view.lista_auto_ricerca.controls.append(ft.Text(str(auto)))
+        self._view.input_modello_auto.value = ""
+        self._view.update()
+
 
 
 

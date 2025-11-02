@@ -1,6 +1,7 @@
 from database.DB_connect import get_connection
 from model.automobile import Automobile
 from model.noleggio import Noleggio
+import mysql.connector
 
 '''
     MODELLO: 
@@ -13,6 +14,7 @@ class Autonoleggio:
     def __init__(self, nome, responsabile):
         self._nome = nome
         self._responsabile = responsabile
+        self._cnx = get_connection()
 
     @property
     def nome(self):
@@ -31,12 +33,28 @@ class Autonoleggio:
         self._responsabile = responsabile
 
     def get_automobili(self) -> list[Automobile] | None:
+
         """
             Funzione che legge tutte le automobili nel database
             :return: una lista con tutte le automobili presenti oppure None
         """
+        if self._cnx is None:
+            print("Connessione al DB non valida")
+            return []
+        try:
+            cursor = self._cnx.cursor()
+            query = """SELECT * FROM automobile"""
+            cursor.execute(query)
+            righe = cursor.fetchall()
+            lista_auto = []
+            for row in righe:
+                lista_auto.append(Automobile(row[0], row[1], row[2], row[3], row[4]))
+            cursor.close()
+            return lista_auto
+        except Exception as e:
+            print("Errore durante la lettura", e)
+            return []
 
-        # TODO
 
     def cerca_automobili_per_modello(self, modello) -> list[Automobile] | None:
         """
@@ -44,4 +62,12 @@ class Autonoleggio:
             :param modello: il modello dell'automobile
             :return: una lista con tutte le automobili di marca e modello indicato oppure None
         """
-        # TODO
+        cursor = self._cnx.cursor()
+        query = """SELECT * FROM automobile WHERE modello = %s"""
+        cursor.execute(query, (modello,))
+        righe = cursor.fetchall()
+        lista_auto = []
+        for row in righe:
+            lista_auto.append(Automobile(row[0], row[1], row[2], row[3], row[4]))
+        cursor.close()
+        return lista_auto
